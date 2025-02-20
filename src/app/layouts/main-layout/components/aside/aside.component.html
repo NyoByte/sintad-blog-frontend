@@ -1,0 +1,28 @@
+<div class="sidebar-logo">
+  <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+  <h1>Sintad Blog</h1>
+</div>
+<ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineIndent]="32"
+  [nzInlineCollapsed]="isCollapsed">
+  <li class="my-8" nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ? 'Inicio' : ''"
+    nzMatchRouter [routerLink]="'welcome'">
+    <nz-icon [nzType]="'custom:menu'" />
+    <a *ngIf="!isCollapsed" class="ml-5">Inicio</a>
+    <span *ngIf="isCollapsed">Inicio</span>
+  </li>
+  <li nz-submenu nzOpen [nzTitle]="'Gestión'" [nzIcon]="'dashboard'">
+    <ul>
+      <li nz-menu-item nzMatchRouter>
+        <a>Mis artículos</a>
+      </li>
+    </ul>
+  </li>
+  <li nz-menu-divider></li>
+  <li nz-submenu nzOpen [nzTitle]="'Mi cuenta'" [nzIcon]="'custom:account'">
+    <ul>
+      <li nz-menu-item (click)="logout()">
+        <a>Cerrar sesión</a>
+      </li>
+    </ul>
+  </li>
+</ul>

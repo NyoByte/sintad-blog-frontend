@@ -1,0 +1,14 @@
+<nz-layout class="app-layout">
+  <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null">
+    <app-aside [isCollapsed]="isCollapsed" />
+  </nz-sider>
+  <nz-layout>
+    <app-header [isCollapsed]="isCollapsed" (isCollapsedChange)="handleCollapseChange($event)" />
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

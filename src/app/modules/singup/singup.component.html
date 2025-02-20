@@ -1,0 +1,48 @@
+<div class="login-wrapper">
+  <div class="login-container">
+    <h2 class="login-title">Registro</h2>
+    <form nz-form [formGroup]="validateForm" nzLabelAlign="left" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>Usuario</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validando..." [nzErrorTip]="userErrorTpl">
+          <input nz-input formControlName="username" />
+          <ng-template #userErrorTpl let-control>
+            @if (control.errors?.['required']) {
+            Por favor ingrese un usuario!
+            }
+            @if (control.errors?.['duplicated']) {
+            El usuario ya existe!
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>Contraseña</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="Por favor ingrese una contraseña!">
+          <input nz-input type="password" formControlName="password" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired nzLabelWrap>Confirmar contraseña</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="passwordErrorTpl">
+          <input nz-input type="password" formControlName="confirm" placeholder="confirma tu contraseña" />
+          <ng-template #passwordErrorTpl let-control>
+            @if (control.errors?.['required']) {
+            Por favor confirma tu contraseña!
+            }
+            @if (control.errors?.['confirm']) {
+            La contraseña no coincide!
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzOffset]="7" [nzSpan]="12">
+          <button class="form-button" nz-button nzType="primary" [disabled]="!validateForm.valid">Registrarme</button>
+          O
+          <a [routerLink]="'/auth/login'">ya tengo una cuenta!</a>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
