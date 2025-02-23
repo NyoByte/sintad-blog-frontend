@@ -6,9 +6,10 @@
   <nz-layout>
     <app-header [isCollapsed]="isCollapsed" (isCollapsedChange)="handleCollapseChange($event)" />
     <nz-content>
-      <div class="inner-content">
+      <div cdkScrollable class="inner-content content-scroll">
         <router-outlet></router-outlet>
       </div>
     </nz-content>
+    <app-footer />
   </nz-layout>
 </nz-layout>

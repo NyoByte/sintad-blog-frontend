@@ -1,0 +1,65 @@
+<div *ngIf="article; else loading" class="article-details">
+  <!-- Título del Artículo -->
+  <h1 class="article-title">{{ article.title }}</h1>
+
+  <!-- Imagen Principal -->
+  <div class="article-image">
+    <img [src]="'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'" alt="Article Cover" />
+  </div>
+
+  <!-- Autor y Fecha -->
+  <div class="article-meta">
+    <nz-avatar nzSize="large" [nzText]="article.author.fullname![0]"></nz-avatar>
+    <span class="ml-4">Por </span>
+    <span class="mx-4"><b> {{ article.author.fullname }}</b></span>
+    <span class="publication-date"><i>{{ formatDate(article.createdAt) }}</i></span>
+  </div>
+
+  <!-- Contenido del Artículo -->
+  <div class="article-content">
+    <p>{{ article.content }}</p>
+  </div>
+
+  <!-- Sección de Comentarios -->
+  <nz-divider nzText="Comentarios"></nz-divider>
+  <div class="comments-section">
+    <ng-template *ngFor="let comment of comments" [ngTemplateOutlet]="commentTemplateRef"
+      [ngTemplateOutletContext]="{ comment: comment }"></ng-template>
+    <ng-template #commentTemplateRef let-comment="comment">
+      <nz-comment [nzAuthor]="comment.user.fullname" [nzDatetime]="formatDateComment(comment.createdAt)">
+        <nz-avatar nz-comment-avatar [nzText]="comment.user.fullname[0]"></nz-avatar>
+        <nz-comment-content>
+          <p>{{ comment.content }}</p>
+        </nz-comment-content>
+        <!-- <nz-comment-action>
+          <a (click)="showReplyBox(comment)">Reply to</a>
+        </nz-comment-action>
+        <div *ngIf="comment.showReplyBox" class="reply-box">
+          <textarea [(ngModel)]="comment.replyText" nz-input rows="2" placeholder="Escribe tu respuesta..."></textarea>
+          <button nz-button nzType="primary" (click)="addReply(comment)">Responder</button>
+          <button nz-button nzType="default" (click)="cancelReply(comment)">Cancelar</button>
+        </div> -->
+        <!-- @if (comment.children && comment.children.length) {
+        @for (child of comment.children; track child) {
+        <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child }" />
+        }
+        } -->
+      </nz-comment>
+    </ng-template>
+
+    <nz-comment>
+      <nz-avatar nz-comment-avatar [nzText]="'N'"></nz-avatar>
+      <nz-comment-content>
+        <nz-form-item>
+          <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+        </nz-form-item>
+        <nz-form-item>
+          <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
+            Add Comment
+          </button>
+        </nz-form-item>
+      </nz-comment-content>
+    </nz-comment>
+  </div>
+</div>
+<ng-template #loading>Loading...</ng-template>

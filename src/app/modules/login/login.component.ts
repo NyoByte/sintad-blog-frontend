@@ -8,6 +8,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { AuthService } from '~core/services';
+import { ApiResponseModel } from '~models/index';
 
 @Component({
   selector: 'app-login',
@@ -45,7 +46,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
-      this.router.navigate(['dashboard']);
+      this.router.navigate(['articles']);
     }
   }
 
@@ -57,10 +58,10 @@ export class LoginComponent implements OnInit {
     const username = this.loginForm.get('username')?.value;
     const password = this.loginForm.get('password')?.value;
     this.authService.login(username, password).subscribe({
-      next: (res: boolean) => {
+      next: (res: ApiResponseModel<string>) => {
         console.log('Login successful', res);
-        if (res) {
-          this.authService.nextLogin(res);
+        if (res.data) {
+          this.authService.nextLogin(res.data);
         } else {
           this.haveErrorMessage = true;
           this.loginForm.controls['password'].reset();

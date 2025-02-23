@@ -1,0 +1,13 @@
+<nz-card class="app-card-article" [nzCover]="coverTemplate" [nzTitle]="title" [nzExtra]="extraTemplate">
+    <nz-card-meta [nzTitle]="author" [nzDescription]="formatDate(publicationDate)"
+        [nzAvatar]="avatarTemplate"></nz-card-meta>
+</nz-card>
+<ng-template #extraTemplate>
+    <a [routerLink]="['/articles', id]">Leer</a>
+</ng-template>
+<ng-template #avatarTemplate>
+    <nz-avatar nzText="{{author[0]}}"></nz-avatar>
+</ng-template>
+<ng-template #coverTemplate>
+    <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+</ng-template>

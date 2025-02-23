@@ -6,6 +6,8 @@ import es from '@angular/common/locales/es';
 import { enableProdMode } from '@angular/core';
 import { environment } from './environments/environment';
 
+(window as any).global = window;
+
 registerLocaleData(es);
 
 if (environment.production) {

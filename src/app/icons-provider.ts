@@ -8,7 +8,7 @@ import {
   PhoneOutline,
   TeamOutline,
   SettingOutline,
-  DownloadOutline, LockOutline, UserOutline
+  DownloadOutline, LockOutline, UserOutline, SendOutline
 } from '@ant-design/icons-angular/icons';
 
 export const icons = [MenuFoldOutline, MenuUnfoldOutline, DashboardOutline, FormOutline, AppstoreOutline,
@@ -16,4 +16,4 @@ export const icons = [MenuFoldOutline, MenuUnfoldOutline, DashboardOutline, Form
   PhoneOutline,
   TeamOutline,
   SettingOutline,
-  DownloadOutline, LockOutline, UserOutline];
+  DownloadOutline, LockOutline, UserOutline, SendOutline];

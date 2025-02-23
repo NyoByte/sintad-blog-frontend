@@ -1,25 +1,17 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { environment } from 'environments/environment';
+import { map, Observable } from 'rxjs';
+import { ApiResponseModel, UserModel } from '~models/index';
 
-// const API_AUTH_KEYCLOAK_URL = `${environment.HOST_AUTH_KEYCLOAK}/${environment.keycloakRealm}/protocol/openid-connect/token`;
+const API_URL = `${environment.HOST_BACKEND_API}/users`;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  // private currentTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-  //   // Obtener el token de acceso
-  //   getToken() {
-  //     return this.currentTokenSubject.asObservable();
-  // }
-
-  // // Guardar el token en el BehaviorSubject
-  // setToken(token: string) {
-  //     this.currentTokenSubject.next(token);
-  // }
   constructor(
     private router: Router,
     private http: HttpClient
@@ -27,6 +19,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('authToken');
     this.router.navigate(['auth/login']);
   }
 
@@ -34,34 +27,31 @@ export class AuthService {
     return localStorage.getItem('isLoggedIn') === 'true';
   }
 
-  nextLogin(res: any) {
+  nextLogin(token: string): void {
     localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('access_token', res.access_token);
-    this.router.navigate(['welcome']);
-
+    localStorage.setItem('authToken', token);
+    this.router.navigate(['articles']);
   }
 
-  login(username: string, password: string): Observable<any> {
-    // const body = this.setBodyKeycloak(username, password);
-    // return this.http.post<any>(API_AUTH_KEYCLOAK_URL, body.toString(), {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/x-www-form-urlencoded'
-    //   })
-    // });
-    if (username === 'admin' && password === 'admin') {
-      return of(true);
-    } else {
-      return of(false);
-    }
+  login(username: string, password: string): Observable<ApiResponseModel<string>> {
+    const body: UserModel = { username, password };
+    return this.http.post<ApiResponseModel<string>>(`${API_URL}/login`, body);
   }
 
-  setBodyKeycloak(username: string, password: string): URLSearchParams {
-    const body = new URLSearchParams();
-    body.set('grant_type', 'password');
-    // body.set('client_id', `${environment.keycloakClientId}`);
-    body.set('username', username);
-    body.set('password', password);
-    return body;
+  signup(user: UserModel): Observable<UserModel> {
+    return this.http.post<ApiResponseModel<UserModel>>(`${API_URL}/signup`, user).pipe(map(res => res.data));
+  }
+
+  confirmUsername(username: string): Observable<boolean> {
+    return this.http.get<ApiResponseModel<boolean>>(`${API_URL}/confirm-username/${username}`).pipe(map(res => res.data));
+  }
+
+  getUserByToken(): Observable<UserModel> {
+    const token = localStorage.getItem('authToken')?.trim();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ApiResponseModel<UserModel>>(`${API_URL}/me`, { headers }).pipe(map(res => res.data));
   }
 
 }

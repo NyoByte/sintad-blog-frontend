@@ -40,8 +40,10 @@
     display: flex;
   }
 
-  & li nz-icon {
+}
+
+.aside-menu {
+  ::ng-deep nz-icon {
     font-size: 24px !important;
   }
-
 }

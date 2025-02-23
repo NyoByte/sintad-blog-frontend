@@ -1,0 +1,46 @@
+.app-card-article {
+    width: 100%;
+    max-width: 300px;
+    max-height: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+::ng-deep .ant-card-head-title {
+    font-weight: bold;
+    white-space: normal;
+    height: 5.2em;
+    line-height: 1.5;
+    padding-right: 16px;
+    align-content: center;
+    text-align: justify;
+    padding-block: 4px !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+
+::ng-deep .ant-card-head {
+    padding-inline: 8px !important;
+}
+
+::ng-deep .ant-card-body {
+    margin-block: 4px !important;
+    padding: 0 8px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .ant-card-meta-detail {
+        font-style: italic;
+    }
+}
+
+::ng-deep .ant-card-meta-avatar {
+    align-self: center !important;
+}
+
+::ng-deep .ant-card-meta-title {
+    margin: 0 !important;
+}

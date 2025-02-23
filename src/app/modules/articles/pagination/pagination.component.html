@@ -1,0 +1,7 @@
+<div class="app-pagination" >
+    <nz-pagination [nzPageIndex]="1" [nzTotal]="total" [nzPageSize]="itemsPerPage"
+        [nzShowTotal]="rangeTemplate"></nz-pagination>
+    <ng-template #rangeTemplate let-range="range" let-total>
+        {{ range[0] }} - {{ range[1] }} de {{ total }} artículos
+    </ng-template>
+</div>

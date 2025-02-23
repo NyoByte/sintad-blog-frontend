@@ -9,9 +9,11 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { Observable, Observer, Subject, takeUntil } from 'rxjs';
 import { AuthService } from '~core/services';
+import { ApiResponseModel } from '~models/index';
+import { UserModel } from '~models/user.model';
 
 @Component({
-  selector: 'app-singup',
+  selector: 'app-signup',
   imports: [
     CommonModule,
     RouterLink,
@@ -23,11 +25,11 @@ import { AuthService } from '~core/services';
     NzAlertModule,
     ReactiveFormsModule,
   ],
-  templateUrl: './singup.component.html',
-  styleUrl: './singup.component.scss',
+  templateUrl: './signup.component.html',
+  styleUrl: './signup.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SingupComponent implements OnInit, OnDestroy {
+export class SignupComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
   validateForm!: FormGroup;
@@ -41,10 +43,8 @@ export class SingupComponent implements OnInit, OnDestroy {
       username: ['', [Validators.required], [this.usernameAsyncValidator]],
       password: ['', Validators.required],
       confirm: ['', [Validators.required, this.confirmValidator]],
+      fullname: ['', Validators.required],
     });
-
-    // userName: this.fb.control('', [Validators.required], [this.userNameAsyncValidator]),
-    // confirm: this.fb.control('', [this.confirmValidator]),
   }
 
   ngOnInit(): void {
@@ -60,19 +60,25 @@ export class SingupComponent implements OnInit, OnDestroy {
 
   usernameAsyncValidator = (control: AbstractControl): Observable<ValidationErrors | null> => {
     return new Observable((observer: Observer<ValidationErrors | null>) => {
-      setTimeout(() => {
-        if (control.value === 'NyoByte') {
+      this.authService.confirmUsername(control.value).subscribe(data => {
+        if (data) {
           observer.next({ error: true, duplicated: true });
         } else {
           observer.next(null);
         }
         observer.complete();
-      }, 1000);
+      })
     });
   }
 
   submitForm(): void {
     console.log('submit', this.validateForm.value);
+    const username = this.validateForm.get('username')?.value;
+    const password = this.validateForm.get('password')?.value;
+    const fullname = this.validateForm.get('fullname')?.value;
+    this.authService.signup({ username, password, fullname }).subscribe(data => {
+      this.router.navigate(['/auth/login']);
+    });
   }
 
   confirmValidator = (control: AbstractControl): ValidationErrors | null => {
@@ -83,4 +89,5 @@ export class SingupComponent implements OnInit, OnDestroy {
     }
     return null;
   }
+
 } 

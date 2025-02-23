@@ -37,6 +37,17 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>Nombre</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="fullnameErrorTpl">
+          <input nz-input formControlName="fullname" />
+          <ng-template #fullnameErrorTpl let-control>
+            @if (control.errors?.['required']) {
+            Por favor ingrese su nombre!
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
         <nz-form-control [nzOffset]="7" [nzSpan]="12">
           <button class="form-button" nz-button nzType="primary" [disabled]="!validateForm.valid">Registrarme</button>
           O

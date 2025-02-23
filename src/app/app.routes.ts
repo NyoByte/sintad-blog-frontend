@@ -3,8 +3,9 @@ import { AuthGuard } from '~core/guards/auth.guard';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { LoginComponent } from './modules/login/login.component';
-import { WelcomeComponent } from './modules/welcome/welcome.component';
-import { SingupComponent } from './modules/singup/singup.component';
+import { ArticlesComponent } from './modules/articles/articles.component';
+import { SignupComponent } from './modules/signup/signup.component';
+import { ArticlesDetailsComponent } from './modules/articles/articles-details/articles-details.component';
 
 export const routes: Routes = [
   {
@@ -13,11 +14,20 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'welcome',
+        path: 'articles',
         data: { role: 'admin' },
-        component: WelcomeComponent
+        children: [
+          {
+            path: '',
+            component: ArticlesComponent
+          },
+          {
+            path: ':id',
+            component: ArticlesDetailsComponent
+          }
+        ]
       },
-      { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+      { path: '', redirectTo: 'articles', pathMatch: 'full' },
     ],
   },
   {
@@ -25,7 +35,7 @@ export const routes: Routes = [
     component: AuthLayoutComponent,
     children: [
       { path: 'login', component: LoginComponent },
-      { path: 'singup', component: SingupComponent },
+      { path: 'signup', component: SignupComponent },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
     ]
   }

@@ -18,6 +18,7 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
+    "types": ["node"],
     "allowSyntheticDefaultImports": true,
     "paths": {
       "~core/*": [
@@ -31,6 +32,9 @@
       ],
       "~shared/*": [
         "app/shared/*"
+      ],
+      "buffer": [
+        "./node_modules/buffer"
       ]
     }
   },
