@@ -14,13 +14,16 @@ RUN npm install
 COPY . .
 
 # Construir la aplicación Angular
-RUN ng build --configuration development
+RUN npm run build:dev
 
 # Etapa de producción
 FROM nginx:alpine
 
 # Copiar archivos construidos desde el builder
 COPY --from=builder /app/dist/sintad-blog-frontend /usr/share/nginx/html
+
+# Copiar la configuración de NGINX
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Exponer el puerto 80
 EXPOSE 80
