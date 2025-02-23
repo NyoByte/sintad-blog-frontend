@@ -18,16 +18,26 @@ export class ArticlesComponent implements OnInit {
 
   articles: ArticleModel[] = [];
   articlesTotal: number = 0;
+  page = 0;
 
   constructor(
     private articleService: ArticleService
   ) { }
 
   ngOnInit(): void {
-    this.articleService.getAllArticles().subscribe(data => {
-      this.articles = data;
-      this.articlesTotal = data.length;
+    this.loadArticles(this.page);
+  }
+
+  loadArticles(page: number): void {
+    this.articleService.getAllArticles(page).subscribe(data => {
+      this.articles = data.items;
+      this.articlesTotal = data.totalCount;
+      this.page = page;
     });
+  }
+
+  onPageChanged(newPage: number): void {
+    this.loadArticles(newPage);
   }
 
 }

@@ -4,11 +4,17 @@
 </div>
 <ul class="aside-menu" nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineIndent]="32"
   [nzInlineCollapsed]="isCollapsed">
-  <li class="my-8" nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ? 'Inicio' : ''"
+  <li class="my-8" nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ? 'Artículos' : ''"
     nzMatchRouter [routerLink]="'articles'">
     <nz-icon [nzType]="'custom:menu'" />
     <a *ngIf="!isCollapsed" class="ml-5">Artículos</a>
-    <span *ngIf="isCollapsed">Inicio</span>
+    <span *ngIf="isCollapsed">Artículos</span>
+  </li>
+  <li class="my-8" nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ? 'Artículos populares' : ''"
+    nzMatchRouter [routerLink]="'popular'">
+    <nz-icon [nzType]="'star'" />
+    <a *ngIf="!isCollapsed" class="ml-5">Artículos populares</a>
+    <span *ngIf="isCollapsed">Artículos populares</span>
   </li>
   <li nz-submenu nzOpen [nzTitle]="'Gestión'" [nzIcon]="'dashboard'">
     <ul>

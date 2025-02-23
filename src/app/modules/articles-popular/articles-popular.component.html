@@ -1,0 +1,13 @@
+<div class="content-wrapper">
+    <h1>Los mas vistos!</h1>
+    <div nz-row [nzGutter]="[16, 16]">
+      <div nz-col [nzXs]="24" [nzMd]="12" [nzLg]="8" [nzXXl]="6" *ngFor="let article of articles">
+        <app-card-article
+          [id]="article.id"
+          [author]="article.author.fullname!"
+          [publicationDate]="article.createdAt"
+          [title]="article.title"
+        />
+      </div>
+    </div>
+  </div>

@@ -6,6 +6,7 @@ import { LoginComponent } from './modules/login/login.component';
 import { ArticlesComponent } from './modules/articles/articles.component';
 import { SignupComponent } from './modules/signup/signup.component';
 import { ArticlesDetailsComponent } from './modules/articles/articles-details/articles-details.component';
+import { ArticlesPopularComponent } from './modules/articles-popular/articles-popular.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,11 @@ export const routes: Routes = [
             component: ArticlesDetailsComponent
           }
         ]
+      },
+      {
+        path: 'popular',
+        data: { role: 'admin' },
+        component: ArticlesPopularComponent
       },
       { path: '', redirectTo: 'articles', pathMatch: 'full' },
     ],

@@ -9,5 +9,5 @@
       />
     </div>
   </div>
-  <app-pagination [total]="articlesTotal" />
+  <app-pagination [page]="page" [total]="articlesTotal" (pageChange)="onPageChanged($event)" />
 </div>

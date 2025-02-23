@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
 @Component({
@@ -10,5 +10,14 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 })
 export class PaginationComponent {
   itemsPerPage = 8;
-  @Input() total?: number = 0;
+
+  @Input() total: number = 0;
+  @Input() page: number = 0;
+
+  @Output() pageChange = new EventEmitter<number>();
+
+  onPageChange(newPage: number): void {
+    this.pageChange.emit(newPage);
+  }
+
 }
