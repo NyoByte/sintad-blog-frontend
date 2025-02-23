@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Construir la aplicación Angular
-RUN npm run build --configuration development
+RUN ng build --configuration development
 
 # Etapa de producción
 FROM nginx:alpine
