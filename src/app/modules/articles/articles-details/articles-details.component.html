@@ -12,7 +12,7 @@
     <nz-avatar nzSize="large" [nzText]="article.author.fullname![0]"></nz-avatar>
     <span class="ml-4">Por </span>
     <span class="mx-4"><b> {{ article.author.fullname }}</b></span>
-    <span class="publication-date"><i>{{ formatDate(article.createdAt) }}</i></span>
+    <span class="publication-date"><i>{{ formatDate(article.createdAt!) }}</i></span>
   </div>
 
   <!-- Contenido del Artículo -->
@@ -48,7 +48,7 @@
     </ng-template>
 
     <nz-comment>
-      <nz-avatar nz-comment-avatar [nzText]="'N'"></nz-avatar>
+      <nz-avatar nz-comment-avatar [nzText]="'?'"></nz-avatar>
       <nz-comment-content>
         <nz-form-item>
           <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>

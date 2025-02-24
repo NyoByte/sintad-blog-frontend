@@ -1,23 +1,21 @@
 import { CommonModule, NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { addDays, format, formatDistance } from 'date-fns';
+import { format, formatDistance } from 'date-fns';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { es } from 'date-fns/locale';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { ArticleService, AuthService } from '~core/services';
 import { ArticleModel, CommentModel, UserModel } from '~models/index';
 import { WebsocketService } from '~core/services/websocket.service';
-import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-articles-details',
@@ -33,11 +31,16 @@ import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
   templateUrl: './articles-details.component.html',
   styleUrl: './articles-details.component.scss',
 })
-export class ArticlesDetailsComponent implements OnInit  {
+export class ArticlesDetailsComponent implements OnInit {
   article!: ArticleModel;
   articleId!: number;
 
   userMe!: UserModel;
+  newComment: string = '';
+  comments: CommentModel[] = [];
+
+  submitting = false;
+  inputValue = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -50,7 +53,7 @@ export class ArticlesDetailsComponent implements OnInit  {
     this.articleId = Number(this.route.snapshot.paramMap.get('id'));
     this.articleService.getArticleById(this.articleId).subscribe(data => {
       this.article = data;
-      this.comments = data.comments;
+      this.comments = data.comments ?? [];
     })
     this.authService.getUserByToken().subscribe(data => {
       this.userMe = data;
@@ -67,12 +70,6 @@ export class ArticlesDetailsComponent implements OnInit  {
     const date = new Date(dateString);
     return formatDistance(new Date(), date, { locale: es });
   }
-
-  newComment: string = '';
-  comments: CommentModel[] = [];
-
-  submitting = false;
-  inputValue = '';
 
   handleSubmit(): void {
     this.submitting = true;

@@ -6,7 +6,8 @@ import { LoginComponent } from './modules/login/login.component';
 import { ArticlesComponent } from './modules/articles/articles.component';
 import { SignupComponent } from './modules/signup/signup.component';
 import { ArticlesDetailsComponent } from './modules/articles/articles-details/articles-details.component';
-import { ArticlesPopularComponent } from './modules/articles-popular/articles-popular.component';
+import { PopularArticlesComponent } from './modules/popular-articles/popular-articles.component';
+import { OwnArticlesComponent } from './modules/own-articles/own-articles.component';
 
 export const routes: Routes = [
   {
@@ -31,7 +32,11 @@ export const routes: Routes = [
       {
         path: 'popular',
         data: { role: 'admin' },
-        component: ArticlesPopularComponent
+        component: PopularArticlesComponent
+      },
+      {
+        path: 'my-articles',
+        component: OwnArticlesComponent
       },
       { path: '', redirectTo: 'articles', pathMatch: 'full' },
     ],

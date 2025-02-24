@@ -1,0 +1,19 @@
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="'750px'" [nzMaskClosable]="false" [nzClosable]="false" [nzTitle]="type == 'C' ? 'Agregar articulo' : 'Editar articulo'" [nzOkText]="type == 'C' ? 'Agregar' : 'Editar'"
+    nzCancelText="Cancelar" (nzOnOk)="handleOk()" (nzOnCancel)="handleCancel()">
+    <ng-container *nzModalContent>
+        <form nz-form [formGroup]="validateForm" nzLabelAlign="left">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="4" nzRequired>Título</nz-form-label>
+                <nz-form-control nzHasFeedback [nzErrorTip]="'Ingrese el título'">
+                    <input nz-input formControlName="title" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="4" nzRequired>Contenido</nz-form-label>
+                <nz-form-control nzHasFeedback [nzErrorTip]="'Ingrese el contenido'">
+                    <textarea nz-input formControlName="content" [nzAutosize]="{ minRows: 4, maxRows: 10 }"></textarea>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-container>
+</nz-modal>

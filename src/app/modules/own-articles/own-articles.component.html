@@ -1,0 +1,40 @@
+<button nz-button nzType="primary" (click)="onAdd()">
+  <nz-icon [nzType]="'plus'" />
+  Agregar
+</button>
+<nz-table [nzData]="listOfData" [nzTableLayout]="'fixed'" [nzLoading]="false" [nzShowPagination]="false"
+  [nzTitle]="'Mis artículos'">
+  <thead>
+    <tr>
+      <th nzWidth="40px" [nzLeft]="true"></th>
+      <th [nzLeft]="true">Titulo</th>
+      <th>Vistas</th>
+      <th>Fecha de publicación</th>
+      <th [nzRight]="true">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of listOfData; track item) {
+    <tr>
+      <td [nzLeft]="true" [(nzExpand)]="item.expand"></td>
+      <td [nzLeft]="true">{{ item.title }}</td>
+      <td>{{ item.views }}</td>
+      <td>{{ formatDate(item.createdAt) }}</td>
+      <td [nzRight]="true">
+        <button class="mr-8" nz-button nzType="primary" nzShape="circle" (click)="onEdit(item.id, item.title, item.content)">
+          <nz-icon nzType="edit" />
+        </button>
+        <button nz-button nzType="primary" nzShape="circle" (click)="onDelete()">
+          <nz-icon nzType="delete" />
+        </button>
+      </td>
+    </tr>
+    <tr [nzExpand]="item.expand">
+      <h3><b>Contenido del articulo:</b></h3>
+      <span>{{ item.content }}</span>
+    </tr>
+    }
+  </tbody>
+</nz-table>
+
+<app-crud-articles [item]="item" [type]="type" [isVisible]="isVisible" (isVisibleChanged)="isVisible = $event" (onDataChanged)="onDataChanged()" />
